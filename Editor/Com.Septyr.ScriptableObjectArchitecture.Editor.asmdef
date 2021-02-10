@@ -2,7 +2,7 @@
     "name": "Com.Septyr.ScriptableObjectArchitecture.Editor",
     "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture.Editor",
     "references": [
-        "Com.Septyr.ScriptableObject-Architecture"
+        "Com.Septyr.ScriptableObjectArchitecture"
     ],
     "includePlatforms": [],
     "excludePlatforms": [
