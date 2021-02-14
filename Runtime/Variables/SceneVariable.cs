@@ -74,14 +74,14 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             internal set { _isSceneEnabled = value; }
         }
 
-        #if UNITY_EDITOR
-        internal UnityEditor.SceneAsset Scene
+#if UNITY_EDITOR
+        public UnityEditor.SceneAsset Scene
         {
             get { return UnityEditor.AssetDatabase.LoadAssetAtPath<UnityEditor.SceneAsset>(_sceneName); }
         }
-        #endif
+#endif
 
-        #pragma warning disable 0649
+#pragma warning disable 0649
 
         [SerializeField]
         private string _sceneName;

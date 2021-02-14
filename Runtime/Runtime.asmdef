@@ -1,13 +1,9 @@
 {
-    "name": "Editor",
-    "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture.Editor",
-    "references": [
-        "Core"
-    ],
+    "name": "Runtime",
+    "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture",
+    "references": [],
     "includePlatforms": [],
-    "excludePlatforms": [
-        "Editor"
-    ],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],

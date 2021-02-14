@@ -5,7 +5,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture
     /// <summary>
     /// Internal extension methods for <see cref="Quaternion"/>.
     /// </summary>
-    internal static class QuaternionExtensions
+    public static class QuaternionExtensions
     {
         /// <summary>
         /// Returns a <see cref="Vector4"/> instance where the component values are equal to this
