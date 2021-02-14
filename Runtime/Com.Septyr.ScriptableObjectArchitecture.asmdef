@@ -1,6 +1,6 @@
 {
-    "name": "Com.Septyr.ScriptableObjectArchitecture",
-    "rootNamespace": "",
+    "name": "Core",
+    "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
