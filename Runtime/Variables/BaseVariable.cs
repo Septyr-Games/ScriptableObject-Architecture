@@ -5,11 +5,15 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseVariable : GameEventBase
     {
+#if UNITY_EDITOR
+        public abstract bool IsVolatile { get; }
+#endif
         public abstract bool IsClamped { get; }
         public abstract bool Clampable { get; }
         public abstract bool ReadOnly { get; }
         public abstract System.Type Type { get; }
         public abstract object BaseValue { get; set; }
+        public abstract void ResetValue();
     }
     public abstract class BaseVariable<T> : BaseVariable
     {
@@ -29,7 +33,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         {
             get
             {
-                if(Clampable)
+                if (Clampable)
                 {
                     return _minClampedValue;
                 }
@@ -43,7 +47,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         {
             get
             {
-                if(Clampable)
+                if (Clampable)
                 {
                     return _maxClampedValue;
                 }
@@ -54,8 +58,11 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             }
         }
 
+#if UNITY_EDITOR
+        public override bool IsVolatile { get { return _isVolatile; } }
+#endif
         public override bool Clampable { get { return false; } }
-        public override bool ReadOnly { get { return _readOnly; } }
+        public override bool ReadOnly { get { return _isClamped ? false : _readOnly; } }
         public override bool IsClamped { get { return _isClamped; } }
         public override System.Type Type { get { return typeof(T); } }
         public override object BaseValue
@@ -71,6 +78,10 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             }
         }
 
+#if UNITY_EDITOR
+        [SerializeField]
+        private bool _isVolatile = false;
+#endif
         [SerializeField]
         protected T _value = default(T);
         [SerializeField]
@@ -95,13 +106,13 @@ namespace Com.Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return _value;
             }
-            else if(Clampable && IsClamped)
+            else if (Clampable && IsClamped)
             {
                 return ClampValue(value);
             }
 
             return value;
-        }        
+        }
         protected virtual T ClampValue(T value)
         {
             return value;
@@ -113,6 +124,12 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 
             Debug.LogWarning("Tried to set value on " + name + ", but value is readonly!", this);
         }
+
+        public override void ResetValue()
+        {
+            _value = default(T);
+        }
+
         public override string ToString()
         {
             return _value == null ? "null" : _value.ToString();

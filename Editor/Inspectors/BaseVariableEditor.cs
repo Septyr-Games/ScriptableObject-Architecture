@@ -11,6 +11,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         protected bool IsClampable { get { return Target.Clampable; } }
         protected bool IsClamped { get { return Target.IsClamped; } }
 
+        private SerializedProperty _isVolatile;
         private SerializedProperty _valueProperty;
         private SerializedProperty _readOnly;
         private SerializedProperty _raiseWarning;
@@ -20,10 +21,12 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         private AnimBool _raiseWarningAnimation;
         private AnimBool _isClampedVariableAnimation;
         
+        private const string IS_VOLATILE_TOOLTIP = "Should this value reset to default?";
         private const string READONLY_TOOLTIP = "Should this value be changable during runtime? Will still be editable in the inspector regardless";
 
         protected virtual void OnEnable()
         {
+            _isVolatile = serializedObject.FindProperty("_isVolatile");
             _valueProperty = serializedObject.FindProperty("_value");
             _readOnly = serializedObject.FindProperty("_readOnly");
             _raiseWarning = serializedObject.FindProperty("_raiseWarning");
@@ -41,12 +44,20 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         {
             serializedObject.Update();
 
+            DrawVolatile();
+
+            EditorGUILayout.Space();
+
             DrawValue();
 
             EditorGUILayout.Space();
 
             DrawClampedFields();
             DrawReadonlyField();
+        }
+        protected virtual void DrawVolatile()
+        {
+            EditorGUILayout.PropertyField(_isVolatile, new GUIContent("Is Volatile", IS_VOLATILE_TOOLTIP));
         }
         protected virtual void DrawValue()
         {
@@ -75,7 +86,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         }
         protected void DrawReadonlyField()
         {
-            if (IsClampable)
+            if (IsClamped)
                 return;
 
             EditorGUILayout.PropertyField(_readOnly, new GUIContent("Read Only", READONLY_TOOLTIP));
