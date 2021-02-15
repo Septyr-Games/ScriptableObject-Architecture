@@ -18,7 +18,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         [MenuItem(itemName: "Assets/Reset Volatile Assets", priority = 70)]
         public static void Reset()
         {
-            string[] guids = AssetDatabase.FindAssets("t:BaseVariable", new string[] { "Assets/ScriptableObjects" });
+            string[] guids = AssetDatabase.FindAssets("t:BaseVariable", new string[] { "Assets/Objects" });
 
             if (guids.Length == 0)
                 return;
