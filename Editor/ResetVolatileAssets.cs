@@ -35,7 +35,8 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
                 }
             }
 
-            Debug.LogFormat("Reset {0} volatile variable{1}", count, count == 1 ? "" : "s");
+            if (count > 0)
+                Debug.LogFormat("Reset {0} volatile variable{1}", count, count == 1 ? "" : "s");
         }
 
         public int callbackOrder => 0;
