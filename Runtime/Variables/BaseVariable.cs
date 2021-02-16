@@ -5,9 +5,6 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseVariable : GameEventBase
     {
-#if UNITY_EDITOR
-        public abstract bool IsVolatile { get; }
-#endif
         public abstract bool IsClamped { get; }
         public abstract bool Clampable { get; }
         public abstract bool ReadOnly { get; }
@@ -58,13 +55,10 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             }
         }
 
-#if UNITY_EDITOR
-        public override bool IsVolatile { get { return _isVolatile; } }
-#endif
-        public override bool Clampable { get { return false; } }
-        public override bool ReadOnly { get { return _isClamped ? false : _readOnly; } }
-        public override bool IsClamped { get { return _isClamped; } }
-        public override System.Type Type { get { return typeof(T); } }
+        public override bool ReadOnly => _readOnly;
+        public override bool Clampable => false;
+        public override bool IsClamped => _isClamped && !_readOnly;
+        public override System.Type Type => typeof(T);
         public override object BaseValue
         {
             get
@@ -78,14 +72,10 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             }
         }
 
-#if UNITY_EDITOR
-        [SerializeField]
-        private bool _isVolatile = false;
-#endif
-        [SerializeField]
-        protected T _value = default(T);
         [SerializeField]
         private bool _readOnly = false;
+        [SerializeField]
+        protected T _value = default(T);
         [SerializeField]
         private bool _raiseWarning = true;
         [SerializeField]

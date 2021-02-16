@@ -18,17 +18,18 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         private SerializedProperty _isClamped;
         private SerializedProperty _minValueProperty;
         private SerializedProperty _maxValueProperty;
+        private AnimBool _readOnlyValueAnimation;
+        private AnimBool _readOnlyClampAnimation;
         private AnimBool _raiseWarningAnimation;
         private AnimBool _isClampedVariableAnimation;
         
-        private const string IS_VOLATILE_TOOLTIP = "Should this value reset to default?";
-        private const string READONLY_TOOLTIP = "Should this value be changable during runtime? Will still be editable in the inspector regardless";
+        private const string READONLY_TOOLTIP = "This allows for a definition in the editor. When disabled (and in \"Objects\" directory),"
+            + "it will not store data between playtesting or builds.";
 
         protected virtual void OnEnable()
         {
-            _isVolatile = serializedObject.FindProperty("_isVolatile");
-            _valueProperty = serializedObject.FindProperty("_value");
             _readOnly = serializedObject.FindProperty("_readOnly");
+            _valueProperty = serializedObject.FindProperty("_value");
             _raiseWarning = serializedObject.FindProperty("_raiseWarning");
             _isClamped = serializedObject.FindProperty("_isClamped");
             _minValueProperty = serializedObject.FindProperty("_minClampedValue");
@@ -37,6 +38,12 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
             _raiseWarningAnimation = new AnimBool(_readOnly.boolValue);
             _raiseWarningAnimation.valueChanged.AddListener(Repaint);
 
+            _readOnlyValueAnimation = new AnimBool(_readOnly.boolValue);
+            _readOnlyValueAnimation.valueChanged.AddListener(Repaint);
+
+            _readOnlyClampAnimation = new AnimBool(_readOnly.boolValue);
+            _readOnlyClampAnimation.valueChanged.AddListener(Repaint);
+
             _isClampedVariableAnimation = new AnimBool(_isClamped.boolValue);
             _isClampedVariableAnimation.valueChanged.AddListener(Repaint);
         }
@@ -44,7 +51,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         {
             serializedObject.Update();
 
-            DrawVolatile();
+            DrawReadonlyField();
 
             EditorGUILayout.Space();
 
@@ -53,52 +60,57 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
             EditorGUILayout.Space();
 
             DrawClampedFields();
-            DrawReadonlyField();
         }
-        protected virtual void DrawVolatile()
+        protected void DrawReadonlyField()
         {
-            EditorGUILayout.PropertyField(_isVolatile, new GUIContent("Is Volatile", IS_VOLATILE_TOOLTIP));
+            EditorGUILayout.PropertyField(_readOnly, new GUIContent("Read Only", READONLY_TOOLTIP));
+
+            _raiseWarningAnimation.target = _readOnly.boolValue;
+            using (var group = new EditorGUILayout.FadeGroupScope(_raiseWarningAnimation.faded))
+            {
+                if (group.visible)
+                {
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(_raiseWarning);
+                    EditorGUI.indentLevel--;
+                }
+            }
         }
         protected virtual void DrawValue()
         {
-            GenericPropertyDrawer.DrawPropertyDrawerLayout(_valueProperty, Target.Type);
+            _readOnlyValueAnimation.target = _readOnly.boolValue;
+            using (var group = new EditorGUILayout.FadeGroupScope(_readOnlyValueAnimation.faded))
+            {
+                if (group.visible)
+                {
+                    GenericPropertyDrawer.DrawPropertyDrawerLayout(_valueProperty, Target.Type);
+                }
+            }
         }
         protected void DrawClampedFields()
         {
             if (!IsClampable)
                 return;
 
-            EditorGUILayout.PropertyField(_isClamped);
-            _isClampedVariableAnimation.target = _isClamped.boolValue;
-
-            using (var anim = new EditorGUILayout.FadeGroupScope(_isClampedVariableAnimation.faded))
+            _readOnlyClampAnimation.target = !_readOnly.boolValue;
+            using (var group = new EditorGUILayout.FadeGroupScope(_readOnlyClampAnimation.faded))
             {
-                if(anim.visible)
+                if (group.visible)
+                {
+                    EditorGUILayout.PropertyField(_isClamped);
+                }
+            }
+
+            _isClampedVariableAnimation.target = _isClamped.boolValue && !_readOnly.boolValue;
+            using (var group = new EditorGUILayout.FadeGroupScope(_isClampedVariableAnimation.faded))
+            {
+                if (group.visible)
                 {
                     using (new EditorGUI.IndentLevelScope())
                     {
                         EditorGUILayout.PropertyField(_minValueProperty);
                         EditorGUILayout.PropertyField(_maxValueProperty);
                     }
-                }                
-            }
-            
-        }
-        protected void DrawReadonlyField()
-        {
-            if (IsClamped)
-                return;
-
-            EditorGUILayout.PropertyField(_readOnly, new GUIContent("Read Only", READONLY_TOOLTIP));
-
-            _raiseWarningAnimation.target = _readOnly.boolValue;
-            using (var fadeGroup = new EditorGUILayout.FadeGroupScope(_raiseWarningAnimation.faded))
-            {
-                if (fadeGroup.visible)
-                {
-                    EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(_raiseWarning);
-                    EditorGUI.indentLevel--;
                 }
             }
         }

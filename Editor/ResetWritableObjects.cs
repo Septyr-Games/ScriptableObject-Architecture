@@ -8,14 +8,14 @@ using UnityEditor.Build.Reporting;
 namespace Com.Septyr.ScriptableObjectArchitecture.Editor
 {
     [InitializeOnLoad]
-    public class ResetVolatileAssets : IPreprocessBuildWithReport
+    public class ResetWritableObjects : IPreprocessBuildWithReport
     {
-        static ResetVolatileAssets()
+        static ResetWritableObjects()
         {
             EditorApplication.playModeStateChanged += OnStateChange;
         }
 
-        [MenuItem(itemName: "Assets/Reset Volatile Assets", priority = 70)]
+        [MenuItem(itemName: "Assets/Reset Writable Objects", priority = 70)]
         public static void Reset()
         {
             string[] guids = AssetDatabase.FindAssets("t:BaseVariable", new string[] { "Assets/Objects" });
@@ -28,7 +28,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 BaseVariable variable = (BaseVariable)AssetDatabase.LoadAssetAtPath(path, typeof(BaseVariable));
-                if (variable.IsVolatile)
+                if (!variable.ReadOnly)
                 {
                     variable.ResetValue();
                     count++;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using System.IO;
 #endif
 
 namespace Com.Septyr.ScriptableObjectArchitecture
@@ -62,6 +63,9 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 #if UNITY_EDITOR
             SOArchitecture_Settings newSettings = CreateInstance<SOArchitecture_Settings>();
 
+            if (!Directory.Exists(DefaultNewSettingsLocation))
+                Directory.CreateDirectory(DefaultNewSettingsLocation);
+
             AssetDatabase.CreateAsset(newSettings, DefaultNewSettingsLocation + DefaultNewSettingsName);
             AssetDatabase.SaveAssets();
 
@@ -77,7 +81,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         }
 
         private const string AssetDatabaseSearchString = "t:SOArchitecture_Settings";
-        private const string DefaultNewSettingsLocation = "Assets\\";
+        private const string DefaultNewSettingsLocation = "Assets\\Settings\\";
         private const string DefaultNewSettingsName = "SOArchitecture_Settings.asset";
 #endregion
 

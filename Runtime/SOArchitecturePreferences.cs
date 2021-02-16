@@ -13,6 +13,16 @@ namespace Com.Septyr.ScriptableObjectArchitecture
     public static class SOArchitecturePreferences
     {
         /// <summary>
+        /// Returns true if reseting on enter Play Mode is enabled, otherwise false.
+        /// </summary>
+        public static bool IsResetOnBeginPlayEnabled => GetBoolPref(RESET_ON_BEGIN_PLAY_PREF, RESET_ON_BEGIN_PLAY_DEFAULT);
+
+        /// <summary>
+        /// Returns true if reseting on exit Play Mode is enabled, otherwise false.
+        /// </summary>
+        public static bool IsResetOnEndPlayEnabled => GetBoolPref(RESET_ON_END_PLAY_PREF, RESET_ON_END_PLAY_DEFAULT);
+
+        /// <summary>
         /// Returns true if debug features should be enabled, otherwise false.
         /// </summary>
         public static bool IsDebugEnabled
@@ -59,9 +69,13 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 #endif
 
         // User Editor Preferences
+        private const string RESET_ON_BEGIN_PLAY_PREF = "SOArchitecture.ResetWritableObjectsOnEnterPlay";
+        private const string RESET_ON_END_PLAY_PREF = "SOArchitecture.ResetWritableObjectsOnExitPlay";
         private const string DRAW_EVENT_GIZMOS_PREF = "SOArchitecture.DrawEventGizmoos";
         private const string ENABLE_DEBUG_PREF = "SOArchitecture.EnableDebug";
 
+        private const bool RESET_ON_BEGIN_PLAY_DEFAULT = true;
+        private const bool RESET_ON_END_PLAY_DEFAULT = true;
         private const bool DRAW_EVENT_GIZMOS_DEFAULT = true;
         private const bool ENABLE_DEBUG_DEFAULT = true;
 
@@ -141,6 +155,32 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         private static void DrawPersonalPrefsGUI(string value = "")
         {
             EditorGUILayout.LabelField(USER_PREFERENCES_HEADER, EditorStyles.boldLabel);
+
+            // Clear writables on enter Play
+            EditorGUILayout.HelpBox("These will reset all objects in \"Objects\" folder that are NOT marked" +
+                                    "as \"Read Only\" on entering Play Mode and exiting Play Mode respectively." +
+                                    "This action can be triggered manually in the Assets Menu. Disabling these" +
+                                    "may improve wait times entering and exiting Play Mode on some machines and" +
+                                    "with enough Objects in the project.", MessageType.Info);
+            var resetOnBeginPlayPref = GetBoolPref(RESET_ON_BEGIN_PLAY_PREF, RESET_ON_BEGIN_PLAY_DEFAULT);
+
+            GUI.changed = false;
+            resetOnBeginPlayPref = EditorGUILayout.Toggle("Reset on Begin Play", resetOnBeginPlayPref);
+            if (GUI.changed)
+            {
+                EditorPrefs.SetBool(RESET_ON_BEGIN_PLAY_PREF, resetOnBeginPlayPref);
+            }
+
+
+            // Exit Play Mode
+            var resetOnEndPlayPref = GetBoolPref(RESET_ON_END_PLAY_PREF, RESET_ON_END_PLAY_DEFAULT);
+
+            GUI.changed = false;
+            resetOnEndPlayPref = EditorGUILayout.Toggle("Reset on End Play", resetOnEndPlayPref);
+            if (GUI.changed)
+            {
+                EditorPrefs.SetBool(RESET_ON_END_PLAY_PREF, resetOnEndPlayPref);
+            }
 
             // Draw Event Gizmo
             var drawEventPref = GetBoolPref(DRAW_EVENT_GIZMOS_PREF, DRAW_EVENT_GIZMOS_DEFAULT);
