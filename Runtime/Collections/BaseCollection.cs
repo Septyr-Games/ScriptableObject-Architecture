@@ -17,10 +17,13 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             }
         }
 
-        public int Count { get { return List.Count; } }
+        public int Count => List.Count;
 
+        public abstract bool ReadOnly { get; }
         public abstract IList List { get; }
         public abstract Type Type { get; }
+        public abstract bool IsFixedSize { get; }
+        public abstract int FixedSize { get; set; }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -30,5 +33,8 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         {
             return List.Contains(obj);
         }
-	}
+#if UNITY_EDITOR
+        public abstract void Reset();
+#endif
+    }
 }

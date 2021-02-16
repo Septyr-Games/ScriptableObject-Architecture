@@ -5,12 +5,14 @@ namespace Com.Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseVariable : GameEventBase
     {
+        public abstract bool ReadOnly { get; }
         public abstract bool IsClamped { get; }
         public abstract bool Clampable { get; }
-        public abstract bool ReadOnly { get; }
         public abstract System.Type Type { get; }
         public abstract object BaseValue { get; set; }
+#if UNITY_EDITOR
         public abstract void ResetValue();
+#endif
     }
     public abstract class BaseVariable<T> : BaseVariable
     {
@@ -75,9 +77,9 @@ namespace Com.Septyr.ScriptableObjectArchitecture
         [SerializeField]
         private bool _readOnly = false;
         [SerializeField]
-        protected T _value = default(T);
-        [SerializeField]
         private bool _raiseWarning = true;
+        [SerializeField]
+        protected T _value = default(T);
         [SerializeField]
         protected bool _isClamped = false;
         [SerializeField]
@@ -115,10 +117,12 @@ namespace Com.Septyr.ScriptableObjectArchitecture
             Debug.LogWarning("Tried to set value on " + name + ", but value is readonly!", this);
         }
 
+#if UNITY_EDITOR
         public override void ResetValue()
         {
             _value = default(T);
         }
+#endif
 
         public override string ToString()
         {

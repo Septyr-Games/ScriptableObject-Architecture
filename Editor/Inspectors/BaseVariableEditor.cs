@@ -11,7 +11,6 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         protected bool IsClampable { get { return Target.Clampable; } }
         protected bool IsClamped { get { return Target.IsClamped; } }
 
-        private SerializedProperty _isVolatile;
         private SerializedProperty _valueProperty;
         private SerializedProperty _readOnly;
         private SerializedProperty _raiseWarning;
@@ -23,7 +22,7 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         private AnimBool _raiseWarningAnimation;
         private AnimBool _isClampedVariableAnimation;
         
-        private const string READONLY_TOOLTIP = "This allows for a definition in the editor. When disabled (and in \"Objects\" directory),"
+        private const string READONLY_TOOLTIP = "This allows for a definition in the editor. When disabled (and in \"Objects\" directory), "
             + "it will not store data between playtesting or builds.";
 
         protected virtual void OnEnable()

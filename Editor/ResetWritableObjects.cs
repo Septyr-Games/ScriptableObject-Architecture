@@ -18,13 +18,14 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
         [MenuItem(itemName: "Assets/Reset Writable Objects", priority = 70)]
         public static void Reset()
         {
-            string[] guids = AssetDatabase.FindAssets("t:BaseVariable", new string[] { "Assets/Objects" });
+            string[] variableGuids = AssetDatabase.FindAssets("t:BaseVariable", new string[] { "Assets/Objects" });
+            string[] collectionGuids = AssetDatabase.FindAssets("t:BaseCollection", new string[] { "Assets/Objects" });
 
-            if (guids.Length == 0)
+            if (variableGuids.Length == 0 && collectionGuids.Length == 0)
                 return;
 
             var count = 0;
-            foreach (string guid in guids)
+            foreach (string guid in variableGuids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 BaseVariable variable = (BaseVariable)AssetDatabase.LoadAssetAtPath(path, typeof(BaseVariable));
@@ -34,9 +35,19 @@ namespace Com.Septyr.ScriptableObjectArchitecture.Editor
                     count++;
                 }
             }
+            foreach (string guid in collectionGuids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                BaseCollection collection = (BaseCollection)AssetDatabase.LoadAssetAtPath(path, typeof(BaseCollection));
+                if (!collection.ReadOnly)
+                {
+                    collection.Reset();
+                    count++;
+                }
+            }
 
             if (count > 0)
-                Debug.LogFormat("Reset {0} volatile variable{1}", count, count == 1 ? "" : "s");
+                Debug.LogFormat("Reset {0} writable variable{1}", count, count == 1 ? "" : "s");
         }
 
         public int callbackOrder => 0;
