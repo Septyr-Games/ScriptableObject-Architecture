@@ -4,7 +4,7 @@ using UnityEditor;
 using System.IO;
 #endif
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public class SOArchitecture_Settings : ScriptableObject
     {

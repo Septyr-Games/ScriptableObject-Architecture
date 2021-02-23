@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [InitializeOnLoad]
     public class ResetWritableObjects : IPreprocessBuildWithReport

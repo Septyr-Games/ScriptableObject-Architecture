@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public class PropertyDrawIterator : BasePropertyDrawIterator
     {

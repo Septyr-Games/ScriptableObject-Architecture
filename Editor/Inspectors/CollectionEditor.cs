@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditorInternal;
 using UnityEditor.AnimatedValues;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomEditor(typeof(BaseCollection), true)]
     public class CollectionEditor : UnityEditor.Editor

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public interface IPropertyDrawIterator : IPropertyIterator
     {

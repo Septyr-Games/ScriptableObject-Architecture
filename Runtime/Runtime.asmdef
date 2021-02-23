@@ -1,6 +1,6 @@
 {
     "name": "Runtime",
-    "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture",
+    "rootNamespace": "Septyr.ScriptableObjectArchitecture",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

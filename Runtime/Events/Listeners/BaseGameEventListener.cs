@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseGameEventListener<TType, TEvent, TResponse> : DebuggableGameEventListener, IGameEventListener<TType>
 where TEvent : GameEventBase<TType>

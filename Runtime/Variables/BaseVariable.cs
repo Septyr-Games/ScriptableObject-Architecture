@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseVariable : GameEventBase
     {

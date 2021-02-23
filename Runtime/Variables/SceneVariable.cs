@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     [System.Serializable]
     public class SceneInfoEvent : UnityEvent<SceneInfo> { }

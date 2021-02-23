@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Type = System.Type;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public abstract class BaseCollection : SOArchitectureBaseObject, IEnumerable
     {

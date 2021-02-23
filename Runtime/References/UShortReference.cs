@@ -1,4 +1,4 @@
-﻿namespace Com.Septyr.ScriptableObjectArchitecture
+﻿namespace Septyr.ScriptableObjectArchitecture
 {
     [System.Serializable]
     public sealed class UShortReference : BaseReference<ushort, UShortVariable>

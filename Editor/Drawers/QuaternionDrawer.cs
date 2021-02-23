@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Com.Septyr.ScriptableObjectArchitecture;
+using Septyr.ScriptableObjectArchitecture;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomPropertyDrawer(typeof(Quaternion))]
     public class QuaternionDrawer : PropertyDrawer

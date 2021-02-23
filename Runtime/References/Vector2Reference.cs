@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     [System.Serializable]
     public sealed class Vector2Reference : BaseReference<Vector2, Vector2Variable>

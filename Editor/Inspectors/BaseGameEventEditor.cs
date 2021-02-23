@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public abstract class BaseGameEventEditor : UnityEditor.Editor
     {

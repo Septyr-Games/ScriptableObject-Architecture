@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomPropertyDrawer(typeof(SceneInfo))]
     internal sealed class SceneInfoPropertyDrawer : PropertyDrawer

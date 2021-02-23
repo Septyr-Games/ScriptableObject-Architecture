@@ -2,7 +2,7 @@
 using UnityEngine;
 using Type = System.Type;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomPropertyDrawer(typeof(BaseReference), true)]
     public sealed class BaseReferenceDrawer : PropertyDrawer

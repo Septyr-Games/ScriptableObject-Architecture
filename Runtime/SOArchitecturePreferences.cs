@@ -3,7 +3,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     /// <summary>
     /// An editor class for managing project and user preferences for the SOArchitecture library. This is kept

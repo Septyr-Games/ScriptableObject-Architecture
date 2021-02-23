@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using Type = System.Type;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public static class SOArchitecture_EditorUtility
     {

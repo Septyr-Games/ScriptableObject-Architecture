@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public interface IStackTraceObject
     {

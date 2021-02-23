@@ -2,7 +2,7 @@
 using UnityEditor.AnimatedValues;
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public class SO_CodeGenerationWindow : EditorWindow
     {

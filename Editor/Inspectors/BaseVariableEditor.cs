@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomEditor(typeof(BaseVariable<>), true)]
     public class BaseVariableEditor : UnityEditor.Editor

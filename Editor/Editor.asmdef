@@ -1,6 +1,6 @@
 {
     "name": "Editor",
-    "rootNamespace": "Com.Septyr.ScriptableObjectArchitecture.Editor",
+    "rootNamespace": "Septyr.ScriptableObjectArchitecture.Editor",
     "references": [
         "GUID:5fce11e3c68903d4ea39c364222a0c55"
     ],

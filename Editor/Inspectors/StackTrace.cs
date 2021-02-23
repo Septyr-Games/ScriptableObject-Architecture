@@ -4,7 +4,7 @@ using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     public class StackTrace
     {

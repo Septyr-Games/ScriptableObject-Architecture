@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public class StackTraceEntry : IEquatable<StackTraceEntry>
     {

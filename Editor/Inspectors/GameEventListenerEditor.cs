@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomEditor(typeof(BaseGameEventListener<,>), true)]
     public class GameEventListenerEditor : BaseGameEventListenerEditor

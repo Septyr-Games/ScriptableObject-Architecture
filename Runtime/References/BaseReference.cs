@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     [System.Serializable]
     public class BaseReference<TBase, TVariable> : BaseReference where TVariable : BaseVariable<TBase>

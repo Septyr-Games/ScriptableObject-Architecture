@@ -1,4 +1,4 @@
-﻿namespace Com.Septyr.ScriptableObjectArchitecture
+﻿namespace Septyr.ScriptableObjectArchitecture
 {
     public interface IGameEvent<T>
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     public abstract class GameEventBase<T> : GameEventBase, IGameEvent<T>, IStackTraceObject
     {

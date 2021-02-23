@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     [CreateAssetMenu(
         fileName = "ByteCollection.asset",

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Com.Septyr.ScriptableObjectArchitecture
+namespace Septyr.ScriptableObjectArchitecture
 {
     /// <summary>
     /// Base class for SOArchitecture assets

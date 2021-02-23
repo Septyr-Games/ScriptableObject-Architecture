@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using Type = System.Type;
 
-namespace Com.Septyr.ScriptableObjectArchitecture.Editor
+namespace Septyr.ScriptableObjectArchitecture.Editor
 {
     [CustomEditor(typeof(GameEventBase<>), true)]
     public class TypedGameEventEditor : BaseGameEventEditor
