@@ -57,21 +57,20 @@ namespace Septyr.ScriptableObjectArchitecture
         protected readonly List<IGameEventListener> _listeners = new List<IGameEventListener>();
         protected readonly List<System.Action> _actions = new List<System.Action>();
 
-        public List<StackTraceEntry> StackTraces { get { return _stackTraces; } }
-        private List<StackTraceEntry> _stackTraces = new List<StackTraceEntry>();
+        public List<StackTraceEntry> StackTraces { get; } = new List<StackTraceEntry>();
 
         public void AddStackTrace()
         {
 #if UNITY_EDITOR
             if (SOArchitecturePreferences.IsDebugEnabled)
-                _stackTraces.Insert(0, StackTraceEntry.Create());
+                StackTraces.Insert(0, StackTraceEntry.Create());
 #endif
         }
         public void AddStackTrace(object value)
         {
 #if UNITY_EDITOR
             if(SOArchitecturePreferences.IsDebugEnabled)
-                _stackTraces.Insert(0, StackTraceEntry.Create(value));
+                StackTraces.Insert(0, StackTraceEntry.Create(value));
 #endif
         }
 

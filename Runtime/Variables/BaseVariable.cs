@@ -18,44 +18,15 @@ namespace Septyr.ScriptableObjectArchitecture
     {
         public virtual T Value
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 _value = SetValue(value);
                 Raise();
             }
         }
-        public virtual T MinClampValue
-        {
-            get
-            {
-                if (Clampable)
-                {
-                    return _minClampedValue;
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
-        }
-        public virtual T MaxClampValue
-        {
-            get
-            {
-                if (Clampable)
-                {
-                    return _maxClampedValue;
-                }
-                else
-                {
-                    return default(T);
-                }
-            }
-        }
+        public virtual T MinClampValue => Clampable ? _minClampedValue : default;
+        public virtual T MaxClampValue => Clampable ? _maxClampedValue : default;
 
         public override bool ReadOnly => _readOnly;
         public override bool Clampable => false;
@@ -63,10 +34,7 @@ namespace Septyr.ScriptableObjectArchitecture
         public override System.Type Type => typeof(T);
         public override object BaseValue
         {
-            get
-            {
-                return _value;
-            }
+            get => _value;
             set
             {
                 _value = SetValue((T)value);
@@ -79,18 +47,15 @@ namespace Septyr.ScriptableObjectArchitecture
         [SerializeField]
         private bool _raiseWarning = true;
         [SerializeField]
-        protected T _value = default(T);
+        protected T _value = default;
         [SerializeField]
         protected bool _isClamped = false;
         [SerializeField]
-        protected T _minClampedValue = default(T);
+        protected T _minClampedValue = default;
         [SerializeField]
-        protected T _maxClampedValue = default(T);
+        protected T _maxClampedValue = default;
 
-        public virtual T SetValue(BaseVariable<T> value)
-        {
-            return SetValue(value.Value);
-        }
+        public virtual T SetValue(BaseVariable<T> value) => SetValue(value.Value);
         public virtual T SetValue(T value)
         {
             if (_readOnly)
@@ -99,16 +64,11 @@ namespace Septyr.ScriptableObjectArchitecture
                 return _value;
             }
             else if (Clampable && IsClamped)
-            {
                 return ClampValue(value);
-            }
 
             return value;
         }
-        protected virtual T ClampValue(T value)
-        {
-            return value;
-        }
+        protected virtual T ClampValue(T value) => value;
         private void RaiseReadonlyWarning()
         {
             if (!_readOnly || !_raiseWarning)
@@ -118,25 +78,16 @@ namespace Septyr.ScriptableObjectArchitecture
         }
 
 #if UNITY_EDITOR
-        public override void ResetValue()
-        {
-            _value = default(T);
-        }
+        public override void ResetValue() => _value = default;
 #endif
 
-        public override string ToString()
-        {
-            return _value == null ? "null" : _value.ToString();
-        }
-        public static implicit operator T(BaseVariable<T> variable)
-        {
-            return variable.Value;
-        }
+        public override string ToString() => _value == null ? "null" : _value.ToString();
+        public static implicit operator T(BaseVariable<T> variable) => variable.Value;
     }
     public abstract class BaseVariable<T, TEvent> : BaseVariable<T> where TEvent : UnityEvent<T>
     {
         [SerializeField]
-        private TEvent _event = default(TEvent);
+        private TEvent _event = default;
 
         public override T SetValue(T value)
         {
@@ -144,18 +95,12 @@ namespace Septyr.ScriptableObjectArchitecture
             T newValue = base.SetValue(value);
 
             if (!newValue.Equals(oldValue))
-                _event.Invoke(newValue);
-
+                _event?.Invoke(newValue);
+            
             return newValue;
         }
-        public void AddListener(UnityAction<T> callback)
-        {
-            _event.AddListener(callback);
-        }
-        public void RemoveListener(UnityAction<T> callback)
-        {
-            _event.RemoveListener(callback);
-        }
+        public void AddListener(UnityAction<T> callback) => _event.AddListener(callback);
+        public void RemoveListener(UnityAction<T> callback) => _event.RemoveListener(callback);
         public override void RemoveAll()
         {
             base.RemoveAll();

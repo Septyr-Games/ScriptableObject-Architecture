@@ -9,14 +9,8 @@ namespace Septyr.ScriptableObjectArchitecture
     {
         public new T this[int index]
         {
-            get
-            {
-                return _list[index];
-            }
-            set
-            {
-                _list[index] = value;
-            }
+            get => _list[index];
+            set => _list[index] = value;
         }
 
         [SerializeField]
@@ -36,20 +30,15 @@ namespace Septyr.ScriptableObjectArchitecture
         public override bool IsFixedSize => _isFixedSize;
         public override int FixedSize
         {
-            get
-            {
-                return Math.Max(_fixedSize, 0);
-            }
+            get => Math.Max(_fixedSize, 0);
             set
             {
                 while (_list.Count > value)
-                {
                     _list.RemoveAt(_list.Count - 1);
-                }
+
                 for (int i = _list.Count - 1; i < value; i++)
-                {
-                    _list.Add(default(T));
-                }
+                    _list.Add(default);
+
                 _list.Capacity = value;
                 _fixedSize = value;
             }
@@ -62,6 +51,7 @@ namespace Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return;
             }
+
             if (_fixedSize > 0 && _list.Count >= _fixedSize)
                 throw new ArgumentOutOfRangeException();
 
@@ -75,6 +65,7 @@ namespace Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return;
             }
+
             _list.Remove(obj);
             _list.Capacity = _fixedSize;
         }
@@ -85,16 +76,11 @@ namespace Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return;
             }
+
             _list.Clear();
         }
-        public bool Contains(T value)
-        {
-            return _list.Contains(value);
-        }
-        public int IndexOf(T value)
-        {
-            return _list.IndexOf(value);
-        }
+        public bool Contains(T value) => _list.Contains(value);
+        public int IndexOf(T value) => _list.IndexOf(value);
         public void RemoveAt(int index)
         {
             if (_readOnly)
@@ -102,6 +88,7 @@ namespace Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return;
             }
+
             _list.RemoveAt(index);
         }
         public void Insert(int index, T value)
@@ -111,27 +98,16 @@ namespace Septyr.ScriptableObjectArchitecture
                 RaiseReadonlyWarning();
                 return;
             }
+
             if (_fixedSize > 0 && _list.Count >= _fixedSize)
                 throw new ArgumentOutOfRangeException();
 
             _list.Insert(index, value);
         }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-        public IEnumerator<T> GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
-        public override string ToString()
-        {
-            return "Collection<" + typeof(T) + ">(" + Count + ")";
-        }
-        public T[] ToArray()
-        {
-            return _list.ToArray();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
+        public override string ToString() => "Collection<" + typeof(T) + ">(" + Count + ")";
+        public T[] ToArray() => _list.ToArray();
         private void RaiseReadonlyWarning()
         {
             if (!_raiseWarning)

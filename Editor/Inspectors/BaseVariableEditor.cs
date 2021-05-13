@@ -7,9 +7,9 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
     [CustomEditor(typeof(BaseVariable<>), true)]
     public class BaseVariableEditor : UnityEditor.Editor
     {
-        private BaseVariable Target { get { return (BaseVariable)target; } }
-        protected bool IsClampable { get { return Target.Clampable; } }
-        protected bool IsClamped { get { return Target.IsClamped; } }
+        private BaseVariable Target => (BaseVariable)target;
+        protected bool IsClampable => Target.Clampable;
+        protected bool IsClamped => Target.IsClamped;
 
         private SerializedProperty _valueProperty;
         private SerializedProperty _readOnly;
@@ -21,7 +21,7 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
         private AnimBool _readOnlyClampAnimation;
         private AnimBool _raiseWarningAnimation;
         private AnimBool _isClampedVariableAnimation;
-        
+
         private const string READONLY_TOOLTIP = "This allows for a definition in the editor. When disabled (and in \"Objects\" directory), "
             + "it will not store data between playtesting or builds.";
 
@@ -78,13 +78,9 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
         protected virtual void DrawValue()
         {
             _readOnlyValueAnimation.target = _readOnly.boolValue;
-            using (var group = new EditorGUILayout.FadeGroupScope(_readOnlyValueAnimation.faded))
-            {
-                if (group.visible)
-                {
-                    GenericPropertyDrawer.DrawPropertyDrawerLayout(_valueProperty, Target.Type);
-                }
-            }
+            using var group = new EditorGUILayout.FadeGroupScope(_readOnlyValueAnimation.faded);
+            if (group.visible)
+                GenericPropertyDrawer.DrawPropertyDrawerLayout(_valueProperty, Target.Type);
         }
         protected void DrawClampedFields()
         {

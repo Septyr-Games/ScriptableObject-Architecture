@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build;
@@ -10,10 +8,7 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
     [InitializeOnLoad]
     public class ResetWritableObjects : IPreprocessBuildWithReport
     {
-        static ResetWritableObjects()
-        {
-            EditorApplication.playModeStateChanged += OnStateChange;
-        }
+        static ResetWritableObjects() => EditorApplication.playModeStateChanged += OnStateChange;
 
         [MenuItem(itemName: "Assets/Reset Writable Objects", priority = 70)]
         public static void Reset()
@@ -24,10 +19,10 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
             if (variableGuids.Length == 0 && collectionGuids.Length == 0)
                 return;
 
-            var count = 0;
+            int count = 0;
             foreach (string guid in variableGuids)
             {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
+                string path = AssetDatabase.GUIDToAssetPath(guid);
                 BaseVariable variable = (BaseVariable)AssetDatabase.LoadAssetAtPath(path, typeof(BaseVariable));
                 if (!variable.ReadOnly)
                 {
@@ -37,7 +32,7 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
             }
             foreach (string guid in collectionGuids)
             {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
+                string path = AssetDatabase.GUIDToAssetPath(guid);
                 BaseCollection collection = (BaseCollection)AssetDatabase.LoadAssetAtPath(path, typeof(BaseCollection));
                 if (!collection.ReadOnly)
                 {
@@ -51,10 +46,7 @@ namespace Septyr.ScriptableObjectArchitecture.Editor
         }
 
         public int callbackOrder => 0;
-        public void OnPreprocessBuild(BuildReport report)
-        {
-            Reset();
-        }
+        public void OnPreprocessBuild(BuildReport report) => Reset();
 
         static void OnStateChange(PlayModeStateChange stateChange)
         {

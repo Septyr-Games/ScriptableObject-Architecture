@@ -7,14 +7,8 @@ namespace Septyr.ScriptableObjectArchitecture
     {
         public object this[int index]
         {
-            get
-            {
-                return List[index];
-            }
-            set
-            {
-                List[index] = value;
-            }
+            get => List[index];
+            set => List[index] = value;
         }
 
         public int Count => List.Count;
@@ -25,14 +19,8 @@ namespace Septyr.ScriptableObjectArchitecture
         public abstract bool IsFixedSize { get; }
         public abstract int FixedSize { get; set; }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return List.GetEnumerator();
-        }
-        public bool Contains(object obj)
-        {
-            return List.Contains(obj);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => List.GetEnumerator();
+        public bool Contains(object obj) => List.Contains(obj);
 #if UNITY_EDITOR
         public abstract void Reset();
 #endif
